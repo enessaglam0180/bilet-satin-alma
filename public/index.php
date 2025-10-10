@@ -1,6 +1,9 @@
 <?php
-// Basit test sayfası
+require_once __DIR__ . '/../src/database.php';
+require_once __DIR__ . '/../src/auth.php';
 ?>
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -14,29 +17,45 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                🚌 Bilet Satın Alma
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">
+            🚌 Bilet Satın Alma
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">Ana Sayfa</a>
+                </li>
+                
+                <?php if (isLoggedIn()): ?>
+                    <!-- Giriş yapıldıysa -->
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Ana Sayfa</a>
+                        <a class="nav-link" href="my-tickets.php">Biletlerim</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.php">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Çıkış (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+                    </li>
+                <?php else: ?>
+                    <!-- Giriş yapılmadıysa -->
                     <li class="nav-item">
                         <a class="nav-link" href="login.php">Giriş Yap</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="register.php">Kayıt Ol</a>
                     </li>
-                </ul>
-            </div>
+                <?php endif; ?>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Hero Section -->
     <section class="bg-light py-5">

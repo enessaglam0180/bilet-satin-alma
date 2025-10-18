@@ -229,3 +229,27 @@ footer {
     font-weight: 700;
     color: #333;
 }
+
+/* =====================================
+   SEFER KART STİLLERİ
+   ===================================== */
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+}
+
+/* Fiyat vurgusu */
+h4.text-success {
+    font-weight: 700;
+    font-size: 1.8rem;
+}

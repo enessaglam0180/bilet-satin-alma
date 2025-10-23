@@ -40,6 +40,11 @@ require_once __DIR__ . '/../src/auth.php';
                     <li class="nav-item">
                         <a class="nav-link" href="profile.php">Profil</a>
                     </li>
+                    <?php if (getUserRole() === 'admin'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_panel.php">🛡️ Admin Panel</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Çıkış (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
                     </li>

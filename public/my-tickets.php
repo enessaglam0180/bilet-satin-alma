@@ -72,7 +72,10 @@ try {
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Ana Sayfa</a></li>
                     <li class="nav-item"><a class="nav-link active" href="my-tickets.php">Biletlerim</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php">Çıkış</a></li>
+                    <?php if (getUserRole() === 'admin'): ?>
+                        <li class="nav-item"><a class="nav-link" href="admin_panel.php">🛡️ Admin Panel</a></li>
+                    <?php endif; ?>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Çıkış (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
                 </ul>
             </div>
         </div>

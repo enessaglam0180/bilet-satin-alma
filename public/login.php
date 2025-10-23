@@ -25,11 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($result['success']) {
         if ($result['user']['role'] === 'admin') {
-            header("Location: /admin/dashboard.php");
-        } elseif ($result['user']['role'] === 'firma_admin') {
-            header("Location: /firma-admin/dashboard.php");
+            header("Location: admin_panel.php");
         } else {
-            header("Location: /index.php");
+            header("Location: index.php");
         }
         exit;
     } else {

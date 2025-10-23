@@ -1,0 +1,96 @@
+# ----------------------------------------------------------------
+# .gitignore (PHP & Composer Projesi için)
+# ----------------------------------------------------------------
+
+# === Composer ===
+# Composer bağımlılıkları. Bu klasör `composer install` ile yeniden oluşturulur.
+/vendor/
+
+# composer.lock dosyasını GİT'E EKLE, bu yüzden burada DEĞİL.
+# Sadece lokal olarak indirilmiş Composer'ı yok say
+composer.phar
+composer.phar.sha256
+
+# === Veritabanı ===
+# [cite_start]Proje dökümanında SQLite kullanıldığı belirtilmiş[cite: 5].
+# Veritabanı dosyaları lokal kalmalı, sunucuda yeniden oluşturulmalı.
+*.db
+*.sqlite
+*.sqlite3
+
+# Özellikle senin projen için:
+/db/app.db
+
+# === Konfigürasyon ve Güvenlik ===
+# Asla API anahtarlarını, veritabanı şifrelerini vs. Git'e gönderme.
+# Bu dosyalar sunucuda manuel olarak oluşturulmalıdır.
+.env
+.env.local
+.env.*.local
+*.env
+
+# === Loglar ===
+# Hata ve erişim logları
+/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+php_errors.log
+error.log
+
+# === İşletim Sistemi ve IDE Dosyaları ===
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Trashes
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PhpStorm / IntelliJ
+.idea/
+
+# NetBeans
+/nbproject/
+/nbproject/private/
+/build/
+/nbdist/
+/dist/
+/nbbuild/
+.nb-gradle/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# === Geçici Dosyalar ===
+# PDF biletleri gibi geçici oluşturulan dosyalar (eğer bir klasörde birikiyorsa)
+# /public/generated_pdfs/
+# /tmp/
+
+# === Docker ===
+# [cite_start]Proje dökümanı Docker ile paketlenecek diyor[cite: 50].
+# Docker-compose'un lokal 'override' dosyalarını yok say.
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Docker-spesifik build bağlamı
+.dockerignore

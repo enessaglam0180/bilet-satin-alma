@@ -67,13 +67,14 @@ try {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">🚌 Bilet Satın Alma</a>
+            <a class="navbar-brand" href="index.php">Bilet Satın Alma</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Ana Sayfa</a></li>
                     <li class="nav-item"><a class="nav-link active" href="my-tickets.php">Biletlerim</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php">Profil</a></li>
                     <?php if (getUserRole() === 'admin'): ?>
-                        <li class="nav-item"><a class="nav-link" href="admin_panel.php">🛡️ Admin Panel</a></li>
+                        <li class="nav-item"><a class="nav-link" href="admin_panel.php">Admin Panel</a></li>
                     <?php endif; ?>
                     <li class="nav-item"><a class="nav-link" href="logout.php">Çıkış (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
                 </ul>
@@ -110,7 +111,7 @@ try {
                         <div class="card h-100 <?php echo $ticket['status'] === 'cancelled' ? 'border-danger' : ''; ?>">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h5 class="card-title">🚌 <?php echo htmlspecialchars($ticket['company_name']); ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($ticket['company_name']); ?></h5>
                                     <span class="badge <?php echo $ticket['status'] === 'active' ? 'bg-success' : 'bg-danger'; ?>">
                                         <?php echo $ticket['status'] === 'active' ? 'Aktif' : 'İptal Edildi'; ?>
                                     </span>

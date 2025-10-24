@@ -155,7 +155,7 @@ $coupons = $pdo->query("SELECT * FROM coupons WHERE is_global = 1 ORDER BY expir
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="container">
-            <h1 class="mb-2">🛡️ Admin Paneli</h1>
+            <h1 class="mb-2">Admin Paneli</h1>
             <p class="mb-0">Sistem yönetimi ve kontrol merkezi</p>
         </div>
     </div>

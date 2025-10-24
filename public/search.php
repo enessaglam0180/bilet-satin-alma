@@ -61,7 +61,7 @@ if (empty($departure) || empty($arrival) || empty($date)) {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">🚌 Bilet Satın Alma</a>
+            <a class="navbar-brand" href="index.php">Bilet Satın Alma</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -70,7 +70,11 @@ if (empty($departure) || empty($arrival) || empty($date)) {
                     <li class="nav-item"><a class="nav-link" href="index.php">Ana Sayfa</a></li>
                     <?php if (isLoggedIn()): ?>
                         <li class="nav-item"><a class="nav-link" href="my-tickets.php">Biletlerim</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Çıkış</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.php">Profil</a></li>
+                        <?php if (getUserRole() === 'admin'): ?>
+                            <li class="nav-item"><a class="nav-link" href="admin_panel.php">Admin Panel</a></li>
+                        <?php endif; ?>
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Çıkış (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Giriş Yap</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Kayıt Ol</a></li>
@@ -114,7 +118,7 @@ if (empty($departure) || empty($arrival) || empty($date)) {
                             <div class="card-body">
                                 <!-- Firma Adı -->
                                 <h5 class="card-title text-primary">
-                                    🚌 <?php echo htmlspecialchars($route['company_name']); ?>
+                                    <?php echo htmlspecialchars($route['company_name']); ?>
                                 </h5>
                                 
                                 <!-- Güzergah -->
@@ -126,8 +130,7 @@ if (empty($departure) || empty($arrival) || empty($date)) {
                                 
                                 <!-- Tarih ve Saat -->
                                 <p class="text-muted mb-2">
-                                    📅 <?php echo date('d.m.Y', strtotime($route['departure_date'])); ?>
-                                    ⏰ <?php echo htmlspecialchars($route['departure_time']); ?>
+                                    <?php echo date('d.m.Y', strtotime($route['departure_date'])); ?> - <?php echo htmlspecialchars($route['departure_time']); ?>
                                 </p>
                                 
                                 <!-- Koltuk Bilgisi -->

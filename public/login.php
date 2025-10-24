@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result['success']) {
         if ($result['user']['role'] === 'admin') {
             header("Location: admin_panel.php");
+        } elseif ($result['user']['role'] === 'firma_admin') {
+            header("Location: firma-admin/dashboard.php");
         } else {
             header("Location: index.php");
         }
@@ -50,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">🚌 Bilet Satın Alma</a>
+            <a class="navbar-brand" href="index.php">Bilet Satın Alma</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Ana Sayfa</a></li>
@@ -77,14 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php endif; ?>
 
-                        <!-- Test Bilgileri (Geliştirme Aşamasında) -->
-                        <div class="alert alert-info mb-4">
-                            <small>
-                                <strong>Test Hesabı:</strong><br>
-                                Kullanıcı: <code>admin</code><br>
-                                Şifre: <code>admin123</code>
-                            </small>
-                        </div>
 
                         <!-- Giriş Formu -->
                         <form method="POST">

@@ -1,6 +1,25 @@
 <?php
 require_once __DIR__ . '/../src/database.php';
 require_once __DIR__ . '/../src/auth.php';
+
+// Tüm güncel seferleri getir (bugünden sonraki)
+try {
+    $stmt = $pdo->prepare("
+        SELECT 
+            routes.*,
+            companies.name AS company_name
+        FROM routes
+        INNER JOIN companies ON routes.company_id = companies.id
+        WHERE routes.departure_date >= DATE('now')
+        AND routes.available_seats > 0
+        ORDER BY routes.departure_date ASC, routes.departure_time ASC
+        LIMIT 20
+    ");
+    $stmt->execute();
+    $allRoutes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $allRoutes = [];
+}
 ?>
 
 
@@ -20,8 +39,8 @@ require_once __DIR__ . '/../src/auth.php';
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php">
-            🚌 Bilet Satın Alma
+            <a class="navbar-brand" href="index.php">
+            Bilet Satın Alma
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -42,7 +61,7 @@ require_once __DIR__ . '/../src/auth.php';
                     </li>
                     <?php if (getUserRole() === 'admin'): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_panel.php">🛡️ Admin Panel</a>
+                            <a class="nav-link" href="admin_panel.php">Admin Panel</a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
@@ -122,40 +141,57 @@ require_once __DIR__ . '/../src/auth.php';
                             
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    🔍 Sefer Ara
+                                    Sefer Ara
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <!-- Hakkında Kartlar -->
-                <div class="row mt-5">
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">✅ Güvenli</h5>
-                                <p class="card-text">Şifreli ve güvenli ödeme sistemi</p>
+                <!-- Popüler Seferler -->
+                <?php if (!empty($allRoutes)): ?>
+                <div class="mt-5">
+                    <h3 class="mb-4">Popüler Seferler</h3>
+                    <div class="row">
+                        <?php foreach ($allRoutes as $route): ?>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">
+                                            <?php echo htmlspecialchars($route['company_name']); ?>
+                                        </h5>
+                                        <p class="mb-2">
+                                            <strong><?php echo htmlspecialchars($route['departure_point']); ?></strong>
+                                            →
+                                            <strong><?php echo htmlspecialchars($route['arrival_point']); ?></strong>
+                                        </p>
+                                        <p class="text-muted mb-2">
+                                            <?php echo date('d.m.Y', strtotime($route['departure_date'])); ?> - <?php echo htmlspecialchars($route['departure_time']); ?>
+                                        </p>
+                                        <p class="mb-2">
+                                            <span class="badge bg-success">
+                                                <?php echo $route['available_seats']; ?> koltuk müsait
+                                            </span>
+                                        </p>
+                                        <h4 class="text-success mb-3">
+                                            ₺<?php echo number_format($route['price'], 2, ',', '.'); ?>
+                                        </h4>
+                                        <?php if (isLoggedIn()): ?>
+                                            <a href="buy-ticket.php?route_id=<?php echo $route['id']; ?>" class="btn btn-primary w-100">
+                                                Bilet Satın Al
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="login.php" class="btn btn-warning w-100">
+                                                Giriş Yapın
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">⚡ Hızlı</h5>
-                                <p class="card-text">Saniyeler içinde bilet satın alın</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">💰 Ucuz</h5>
-                                <p class="card-text">En iyi fiyatlarla bilet alın</p>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
